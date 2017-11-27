@@ -1,0 +1,13 @@
+.filter-head {
+    padding: 8px 24px 0
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.table-row-image {
+    height: 100px;
+    width: 100px;
+}

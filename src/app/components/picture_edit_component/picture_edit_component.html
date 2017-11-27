@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Hi，你可以修改</h2>
+<mat-dialog-content>
+    <mat-form-field>
+        <input matInput ngModel placeholder="简介" [(ngModel)]="picture.description" />
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="false">取消</button>
+    <!-- Can optionally provide a result for the closing dialog. -->
+    <button mat-button (click)="SaveChanges()">确认</button>
+</mat-dialog-actions>

@@ -1,0 +1,23 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <span>图集</span>
+            <span class="example-spacer"></span>
+            <button mat-icon-button (click)="Upload_Click()">
+                <mat-icon matTooltip="上传" aria-label="上传">file_upload</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-tab-group class="demo-tab-group">
+        <mat-tab label="列表">
+            <picture-table></picture-table>
+        </mat-tab>
+        <mat-tab label="图表">
+            <div>
+
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <input type="file" style="display: none;" accept="image/*" #uploader (change)="Upload_Changed(uploader.files)" />
+</div>
