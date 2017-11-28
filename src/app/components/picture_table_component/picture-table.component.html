@@ -1,63 +1,64 @@
 ﻿<div>
-    <div class="example-loading-shade" *ngIf="IsLoadingResults || IsRateLimitReached">
-        <mat-spinner *ngIf="IsLoadingResults"></mat-spinner>
-        <div class="example-rate-limit-reached" *ngIf="IsRateLimitReached">
-            GitHub's API rate limit has been reached. It will be reset in one minute.
-        </div>
+  <div class="example-loading-shade" *ngIf="IsLoadingResults || IsRateLimitReached">
+    <mat-spinner *ngIf="IsLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="IsRateLimitReached">
+      GitHub's API rate limit has been reached. It will be reset in one minute.
     </div>
-    <div class="filter-head">
-        <mat-form-field>
-            <input matInput (keyup)="ApplyFilter($event.target.value)" placeholder="筛选条件" />
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-table [dataSource]="PicturesData" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
-            <ng-container matColumnDef="image">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> 图 </mat-header-cell>
-                <mat-cell *matCellDef="let row">
-                    <img src="{{row.src}}" class="table-row-image" />
-
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> 名 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="description">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> 简介 </mat-header-cell>
-                <mat-cell *matCellDef="let row">
-                    {{row.description}}
-                    <!-- <span [style.display]="row.isEditing?'none':'block'" (click)="UpdatePictureButton_Click(row)">{{row.description}}</span>
+  </div>
+  <div class="filter-head">
+    <mat-form-field>
+      <input matInput (keyup)="ApplyFilter($event.target.value)" placeholder="筛选条件" />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-table [dataSource]="PicturesData" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+      <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 图 </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="mat-cell-row">
+          <img src="{{row.src}}" class="table-row-image" />
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 名 </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="mat-cell-row"> {{row.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 简介 </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="mat-cell-row">
+          {{row.description}}
+          <!-- <span [style.display]="row.isEditing?'none':'block'" (click)="UpdatePictureButton_Click(row)">{{row.description}}</span>
                 <mat-form-field [style.display]="row.isEditing?'block':'none'">
                     <input matInput placeholder="输入" [value]="row.description" ngModel (blur)="SavePictureButton_Click(row)" />
                 </mat-form-field> -->
-                </mat-cell>
-            </ng-container>
+        </mat-cell>
+      </ng-container>
 
-            <ng-container matColumnDef="actions">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> 你可以 </mat-header-cell>
-                <mat-cell *matCellDef="let row">
-                    <button mat-icon-button (click)="DownloadImageButton_Click(row)">
-                        <mat-icon matTooltip="下载" aria-label="下载">
-                            <i class="material-icons">file_download</i>
-                        </mat-icon>
-                    </button>
-                    <button mat-icon-button (click)="ModifyPictureButton_Click(row)">
-                        <mat-icon matTooltip="修改" aria-label="修改">
-                            <i class="material-icons">mode_edit</i>
-                        </mat-icon>
-                    </button>
-                    <button mat-icon-button (click)="DeletePictureButton_Click(row._id)">
-                        <mat-icon matTooltip="删除" aria-label="删除">
-                            <i class="material-icons">delete</i>
-                        </mat-icon>
-                    </button>
-                </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: DisplayedColumns;"></mat-row>
-        </mat-table>
-        <mat-paginator [length]="Length" [pageSizeOptions]="PageSizeOptions" [pageSize]="PageSize" (page)="GetPicturesAsync($event)">
-        </mat-paginator>
-    </div>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <span style="text-align:center;">你可以</span>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="DownloadImageButton_Click(row)">
+            <mat-icon matTooltip="下载" aria-label="下载">
+              <i class="material-icons">file_download</i>ng
+            </mat-icon>
+          </button>
+          <button mat-icon-button (click)="ModifyPictureButton_Click(row)">
+            <mat-icon matTooltip="修改" aria-label="修改">
+              <i class="material-icons">mode_edit</i>
+            </mat-icon>
+          </button>
+          <button mat-icon-button (click)="DeletePictureButton_Click(row._id)">
+            <mat-icon matTooltip="删除" aria-label="删除">
+              <i class="material-icons">delete</i>
+            </mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="DisplayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: DisplayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="Length" [pageSizeOptions]="PageSizeOptions" [pageSize]="PageSize" (page)="GetPicturesAsync($event)">
+    </mat-paginator>
+  </div>
 </div>
