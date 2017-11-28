@@ -1,7 +1,6 @@
 import { Component, Inject } from "@angular/core";
-import { Input } from "@angular/core/src/metadata/directives";
 import { Picture } from "../../models/Picture";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { PictureService } from "../../services/PicturesService";
 
 @Component(

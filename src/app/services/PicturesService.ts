@@ -1,10 +1,11 @@
 ﻿import { Injectable } from "@angular/core";
 import { Picture } from "../models/Picture";
-import { HttpClient, HttpEventType, HttpRequest, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpEventType, HttpRequest, HttpResponse, HttpParams } from "@angular/common/http";
 import { AppConfig } from "../Appconfig";
 import 'rxjs/add/operator/retry'
 import { HttpErrorResponse } from "@angular/common/http/src/response";
 import { Picture_tableComponent } from "../components/picture_table_component/picture-table.component";
+import { ResponseData } from "../models/ResponseData";
 
 @Injectable()
 export class PictureService {
@@ -12,11 +13,13 @@ export class PictureService {
     constructor(private http: HttpClient, private appconfig: AppConfig) {
     }
 
-    async GetPicturesAsync(): Promise<Picture[]> {
+    async GetPicturesAsync(condition: any, pageIndex: number, pageSize: number): Promise<ResponseData<Picture[]>> {
         let httpClient = this.http, appconfig = this.appconfig;
+        //Angular里Get方法不允许Post参数。只能通过地址栏传参
+        let url = `${appconfig.ApiBaseAddress}/api?skip=${pageIndex * pageSize}&limit=${pageSize}`;
 
-        return new Promise<Picture[]>((resolve, reject) => {
-            httpClient.get<Picture[]>(`${appconfig.ApiBaseAddress}/api`).retry(3).subscribe(
+        return new Promise<ResponseData<Picture[]>>((resolve, reject) => {
+            httpClient.get<ResponseData<Picture[]>>(url).retry(3).subscribe(
                 data => {
                     resolve(data);
                 },
@@ -62,23 +65,27 @@ export class PictureService {
         });
     }
 
-    UploadImage(file: File, uploadCompletedFunc: Picture_tableComponent) {
+    async UploadImageAsync(file: File): Promise<boolean> {
         let httpClient = this.http;
-        let postData = new FormData();
-        postData.append("fileName", file.name);
-        postData.append("file", file);
-        httpClient.request(new HttpRequest("POST", `${this.appconfig.ApiBaseAddress}/api/upload`, postData, {
-            reportProgress: true
-        })).subscribe(event => {
-            if (event.type === HttpEventType.UploadProgress) {
-                // This is an upload progress event. Compute and show the % done:
-                let percentDone = Math.round(100 * event.loaded / event.total);
-                console.log(`${file.name} is ${percentDone}% uploaded.`);
-            } else if (event instanceof HttpResponse) {
-                if (uploadCompletedFunc)
-                    uploadCompletedFunc.LoadData();
-                console.log(`${file.name} is completely uploaded!`);
-            }
+        return new Promise<boolean>((resolve, reject) => {
+            let postData = new FormData();
+            postData.append("fileName", file.name);
+            postData.append("file", file);
+            httpClient.request(new HttpRequest("POST", `${this.appconfig.ApiBaseAddress}/api/upload`, postData, {
+                reportProgress: true
+            })).subscribe(event => {
+                if (event.type === HttpEventType.UploadProgress) {
+                    // This is an upload progress event. Compute and show the % done:
+                    let percentDone = Math.round(100 * event.loaded / event.total);
+                    console.log(`${file.name} is ${percentDone}% uploaded.`);
+                } else if (event instanceof HttpResponse) {
+                    resolve(true);
+                    console.log(`${file.name} is completely uploaded!`);
+                }
+            }, (err: Error) => {
+                console.log(err.message);
+                reject(false);
+            });
         });
     }
 

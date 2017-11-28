@@ -11,7 +11,9 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatDialogModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSortModule
 } from "@angular/material";
 import { AppComponent } from './app.component';
 import { FormsModule } from "@angular/forms";
@@ -41,7 +43,9 @@ import { Picture_Edit_Component } from "./components/picture_edit_component/pict
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule
   ],
   entryComponents:[
     Picture_Edit_Component

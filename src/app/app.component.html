@@ -4,9 +4,10 @@
         <mat-toolbar-row>
             <span>图集</span>
             <span class="example-spacer"></span>
-            <button mat-icon-button (click)="Upload_Click()">
+            <button mat-icon-button (click)="Upload_Click()" [style.display]="IsUploadingImage?'none':'block'">
                 <mat-icon matTooltip="上传" aria-label="上传">file_upload</mat-icon>
             </button>
+            <mat-progress-spinner mode="indeterminate" diameter="30" [style.display]="IsUploadingImage?'block':'none'"></mat-progress-spinner>
         </mat-toolbar-row>
     </mat-toolbar>
     <mat-tab-group class="demo-tab-group">

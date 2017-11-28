@@ -13,3 +13,8 @@
 .demo-tab-content {
     padding: 16px;
 }
+
+.mat-progress-spinner{
+    width: 100px;
+    height: 100px;
+}
